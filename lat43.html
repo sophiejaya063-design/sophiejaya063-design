@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penjumlahan Dua Bilangan</title>
+</head>
+<body>
+
+    <h3>Penjumlahan Dua Bilangan</h3>
+
+    <label>Bilangan pertama:</label>
+    <input type="number" id="bilangan1">
+
+    <br><br>
+
+    <label>Bilangan kedua:</label>
+    <input type="number" id="bilangan2">
+
+    <br><br>
+
+    <button onclick="jumlahkan()">Hitung Hasil</button>
+
+    <p id="hasil"></p>
+
+    <script>
+        function jumlahkan() {
+            let a = document.getElementById("bilangan1").value;
+            let b = document.getElementById("bilangan2").value;
+            let hasil = document.getElementById("hasil");
+
+            if (a === "" || b === "") {
+                hasil.textContent = "Masukkan kedua bilangan terlebih dahulu!";
+                return;
+            }
+
+            let total = Number(a) + Number(b);
+
+            hasil.textContent = "Hasil penjumlahan: " + total;
+        }
+    </script>
+
+</body>
+</html>
