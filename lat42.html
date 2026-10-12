@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Usia</title>
+</head>
+<body>
+
+    <label for="tanggalLahir">Tanggal lahir kamu:</label>
+    <input type="date" id="tanggalLahir">
+
+    <p id="hasil"></p>
+
+    <script>
+        const tanggalLahir = document.getElementById("tanggalLahir");
+        const hasil = document.getElementById("hasil");
+
+        tanggalLahir.addEventListener("input", function () {
+            if (!tanggalLahir.value) {
+                hasil.textContent = "";
+                return;
+            }
+
+            const lahir = new Date(tanggalLahir.value + "T00:00:00");
+            const sekarang = new Date();
+
+            if (isNaN(lahir.getTime()) || lahir > sekarang) {
+                hasil.textContent = "Masukkan tanggal lahir yang valid.";
+                return;
+            }
+
+            let tahun = sekarang.getFullYear() - lahir.getFullYear();
+            let bulan = sekarang.getMonth() - lahir.getMonth();
+            let hari = sekarang.getDate() - lahir.getDate();
+
+            if (hari < 0) {
+                bulan--;
+                const jumlahHari = new Date(
+                    sekarang.getFullYear(),
+                    sekarang.getMonth(),
+                    0
+                ).getDate();
+
+                hari += jumlahHari;
+            }
+
+            if (bulan < 0) {
+                tahun--;
+                bulan += 12;
+            }
+
+            hasil.textContent =
+                `Kamu sudah berusia ${tahun} tahun ${bulan} bulan ${hari} hari.`;
+        });
+    </script>
+
+</body>
+</html>
