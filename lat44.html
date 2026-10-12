@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Huruf Mutu</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background: #eaf6fc;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            padding: 25px 15px;
+        }
+
+        .kartu {
+            max-width: 500px;
+            margin: 20px auto;
+            background: white;
+            padding: 28px;
+            border-radius: 22px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1870f5;
+            font-weight: bold;
+        }
+
+        .form-control {
+            padding: 12px;
+            margin-bottom: 18px;
+        }
+
+        .btn-hitung {
+            width: 100%;
+            padding: 12px;
+            background: #1870f5;
+            border: none;
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .btn-hitung:hover {
+            background: #0758d5;
+        }
+
+        #hasil {
+            display: none;
+            margin-top: 22px;
+            padding: 22px;
+            border-radius: 15px;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        #huruf {
+            font-size: 65px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .mutu-A {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .mutu-B {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .mutu-C {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .mutu-D {
+            background: #ffedd5;
+            color: #9a3412;
+        }
+
+        .mutu-E {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .error {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background: #fee2e2;
+            color: #991b1b;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="kartu">
+
+        <div class="text-center mb-4">
+            <h2>Huruf Mutu</h2>
+            <p class="text-secondary">
+                Program Penilaian Mahasiswa
+            </p>
+        </div>
+
+        <form id="formNilai">
+            <label for="nama" class="form-label fw-bold">
+                Nama Mahasiswa
+            </label>
+
+            <input
+                type="text"
+                id="nama"
+                class="form-control"
+                placeholder="Masukkan nama mahasiswa"
+                required
+            >
+
+            <label for="nilai" class="form-label fw-bold">
+                Nilai Akhir (0–100)
+            </label>
+
+            <input
+                type="text"
+                id="nilai"
+                class="form-control"
+                inputmode="decimal"
+                placeholder="Contoh: 85.5"
+                required
+            >
+
+            <button type="submit" class="btn-hitung">
+                Hitung Huruf Mutu
+            </button>
+        </form>
+
+        <div id="error" class="error" role="alert"></div>
+
+        <div id="hasil" aria-live="polite">
+            <p class="mb-1">Huruf Mutu Kamu</p>
+            <div id="huruf"></div>
+            <h5 id="namaHasil"></h5>
+            <p id="nilaiHasil" class="mb-0"></p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById("formNilai");
+    const inputNama = document.getElementById("nama");
+    const inputNilai = document.getElementById("nilai");
+    const hasil = document.getElementById("hasil");
+    const error = document.getElementById("error");
+
+    function tampilkanError(pesan) {
+        error.textContent = pesan;
+        error.style.display = "block";
+        hasil.style.display = "none";
+    }
+
+    function hitungMutu() {
+        const nama = inputNama.value.trim();
+        const teksNilai = inputNilai.value.trim();
+
+        error.style.display = "none";
+        hasil.style.display = "none";
+
+        if (nama === "") {
+            tampilkanError("Error: Nama mahasiswa harus diisi.");
+            return;
+        }
+
+        if (teksNilai === "") {
+            tampilkanError("Error: Nilai akhir harus diisi.");
+            return;
+        }
+
+        // Memastikan input merupakan angka yang valid
+        // dengan titik atau koma sebagai desimal.
+        const formatAngka = /^[+-]?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/;
+
+        if (!formatAngka.test(teksNilai)) {
+            tampilkanError("Error: Nilai harus berupa angka.");
+            return;
+        }
+
+        const nilai = Number(teksNilai.replace(",", "."));
+
+        if (!Number.isFinite(nilai)) {
+            tampilkanError("Error: Nilai harus berupa angka.");
+            return;
+        }
+
+        if (nilai < 0) {
+            tampilkanError("Error: Nilai tidak boleh negatif.");
+            return;
+        }
+
+        if (nilai > 100) {
+            tampilkanError("Error: Nilai tidak boleh melebihi 100.");
+            return;
+        }
+
+        let huruf;
+        let keterangan;
+
+        if (nilai >= 84.5) {
+            huruf = "A";
+            keterangan = "Sangat Baik";
+        } else if (nilai >= 74.5) {
+            huruf = "B";
+            keterangan = "Baik";
+        } else if (nilai >= 59.5) {
+            huruf = "C";
+            keterangan = "Cukup";
+        } else if (nilai >= 49.5) {
+            huruf = "D";
+            keterangan = "Kurang";
+        } else {
+            huruf = "E";
+            keterangan = "Perlu Perbaikan";
+        }
+
+        // Mengubah warna latar berdasarkan huruf mutu
+        hasil.className = "mutu-" + huruf;
+        hasil.style.display = "block";
+
+        document.getElementById("huruf").textContent = huruf;
+        document.getElementById("namaHasil").textContent = nama;
+        document.getElementById("nilaiHasil").textContent =
+            "Nilai: " + nilai + " | " + keterangan;
+    }
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        hitungMutu();
+    });
+
+    // Hasil otomatis diperbarui saat pengguna mengetik.
+    inputNama.addEventListener("input", function() {
+        if (inputNilai.value.trim() !== "") {
+            hitungMutu();
+        }
+    });
+
+    inputNilai.addEventListener("input", function() {
+        if (inputNilai.value.trim() !== "") {
+            hitungMutu();
+        } else {
+            hasil.style.display = "none";
+            error.style.display = "none";
+        }
+    });
+</script>
+
+</body>
+</html>
