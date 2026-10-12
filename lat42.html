@@ -1,60 +1,68 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hitung Umur</title>
+    <title>Menghitung Usia</title>
 </head>
 <body>
 
     <label for="tanggalLahir">Tanggal lahir kamu:</label>
-    <input type="date" id="tanggalLahir" onchange="hitungUmur()">
-    
-    <p id="hasilUmur"></p>
+    <input type="date" id="tanggalLahir">
+
+    <p id="hasilUsia"></p>
 
     <script>
-        function hitungUmur() {
-            // Ambil nilai dari input tanggal
-            const tanggalLahirInput = document.getElementById("tanggalLahir").value;
-            
-            // Cek apakah tanggal valid (tidak kosong)
-            if (tanggalLahirInput) {
-                const tanggalLahir = new Date(tanggalLahirInput);
-                const sekarang = new Date();
+        const inputTanggal = document.getElementById("tanggalLahir");
+        const hasilUsia = document.getElementById("hasilUsia");
 
-                // Hitung selisih tahun, bulan, dan hari
-                let tahun = sekarang.getFullYear() - tanggalLahir.getFullYear();
-                let bulan = sekarang.getMonth() - tanggalLahir.getMonth();
-                let hari = sekarang.getDate() - tanggalLahir.getDate();
+        inputTanggal.addEventListener("input", function () {
+            const tanggal = inputTanggal.value;
 
-                // Koreksi jika hari negatif (pinjam hari dari bulan sebelumnya)
-                if (hari < 0) {
-                    bulan--;
-                    // Dapatkan jumlah hari pada bulan sebelumnya
-                    const bulanLalu = new Date(sekarang.getFullYear(), sekarang.getMonth(), 0);
-                    hari += bulanLalu.getDate();
-                }
-
-                // Koreksi jika bulan negatif (pinjam bulan dari tahun sebelumnya)
-                if (bulan < 0) {
-                    tahun--;
-                    bulan += 12;
-                }
-                
-                // Pastikan umur tidak negatif (tanggal lahir di masa depan)
-                if (tahun < 0) {
-                   document.getElementById("hasilUmur").innerHTML = "Tanggal lahir tidak boleh di masa depan.";
-                   return;
-                }
-
-                // Tampilkan hasil
-                const teksHasil = `Kamu sudah berusia ${tahun} tahun ${bulan} bulan ${hari} hari.`;
-                document.getElementById("hasilUmur").innerHTML = teksHasil;
-            } else {
-                // Kosongkan paragraf jika input dihapus
-                document.getElementById("hasilUmur").innerHTML = "";
+            if (!tanggal) {
+                hasilUsia.textContent = "";
+                return;
             }
-        }
+
+            const lahir = new Date(tanggal + "T00:00:00");
+            const sekarang = new Date();
+
+            // Mengosongkan hasil jika tanggal tidak valid
+            // atau tanggal lahir berada di masa depan.
+            if (
+                isNaN(lahir.getTime()) ||
+                lahir > sekarang
+            ) {
+                hasilUsia.textContent =
+                    "Masukkan tanggal lahir yang valid.";
+                return;
+            }
+
+            let tahun = sekarang.getFullYear() - lahir.getFullYear();
+            let bulan = sekarang.getMonth() - lahir.getMonth();
+            let hari = sekarang.getDate() - lahir.getDate();
+
+            if (hari < 0) {
+                bulan--;
+
+                const hariBulanSebelumnya = new Date(
+                    sekarang.getFullYear(),
+                    sekarang.getMonth(),
+                    0
+                ).getDate();
+
+                hari += hariBulanSebelumnya;
+            }
+
+            if (bulan < 0) {
+                tahun--;
+                bulan += 12;
+            }
+
+            hasilUsia.textContent =
+                `Kamu sudah berusia ${tahun} tahun ${bulan} bulan ${hari} hari.`;
+        });
     </script>
 
 </body>
