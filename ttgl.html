@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Umur</title>
+</head>
+<body>
+
+    <label for="tanggalLahir">Tanggal lahir kamu:</label>
+    <input type="date" id="tanggalLahir" onchange="hitungUmur()">
+    
+    <p id="hasilUmur"></p>
+
+    <script>
+        function hitungUmur() {
+            // Ambil nilai dari input tanggal
+            const tanggalLahirInput = document.getElementById("tanggalLahir").value;
+            
+            // Cek apakah tanggal valid (tidak kosong)
+            if (tanggalLahirInput) {
+                const tanggalLahir = new Date(tanggalLahirInput);
+                const sekarang = new Date();
+
+                // Hitung selisih tahun, bulan, dan hari
+                let tahun = sekarang.getFullYear() - tanggalLahir.getFullYear();
+                let bulan = sekarang.getMonth() - tanggalLahir.getMonth();
+                let hari = sekarang.getDate() - tanggalLahir.getDate();
+
+                // Koreksi jika hari negatif (pinjam hari dari bulan sebelumnya)
+                if (hari < 0) {
+                    bulan--;
+                    // Dapatkan jumlah hari pada bulan sebelumnya
+                    const bulanLalu = new Date(sekarang.getFullYear(), sekarang.getMonth(), 0);
+                    hari += bulanLalu.getDate();
+                }
+
+                // Koreksi jika bulan negatif (pinjam bulan dari tahun sebelumnya)
+                if (bulan < 0) {
+                    tahun--;
+                    bulan += 12;
+                }
+                
+                // Pastikan umur tidak negatif (tanggal lahir di masa depan)
+                if (tahun < 0) {
+                   document.getElementById("hasilUmur").innerHTML = "Tanggal lahir tidak boleh di masa depan.";
+                   return;
+                }
+
+                // Tampilkan hasil
+                const teksHasil = `Kamu sudah berusia ${tahun} tahun ${bulan} bulan ${hari} hari.`;
+                document.getElementById("hasilUmur").innerHTML = teksHasil;
+            } else {
+                // Kosongkan paragraf jika input dihapus
+                document.getElementById("hasilUmur").innerHTML = "";
+            }
+        }
+    </script>
+
+</body>
+</html>
