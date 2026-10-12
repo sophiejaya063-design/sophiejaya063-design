@@ -1,1 +1,41 @@
-lat41 sudah siap
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waktu Saat Ini</title>
+</head>
+<body>
+
+    <!-- Tampilan HTML (Hanya Tombol dan elemen kosong untuk memunculkan teks) -->
+    <button onclick="tampilkanWaktu()">Tampilkan Waktu saat ini</button>
+    <p id="tempat-waktu"></p>
+
+    <script>
+        /* 
+        ========================================
+        PSEUDOCODE
+        ========================================
+        Mulai
+            Definisikan fungsi tampilkanWaktu():
+                1. Dapatkan informasi tanggal dan waktu dari sistem.
+                2. Simpan informasi tersebut ke dalam variabel 'waktuSekarang'.
+                3. Cari elemen pada HTML yang akan digunakan untuk menampilkan teks (id="tempat-waktu").
+                4. Ubah isi teks pada elemen tersebut menjadi string dari 'waktuSekarang'.
+            Akhir Fungsi
+        Selesai
+        ========================================
+        */
+
+        // Implementasi JavaScript
+        function tampilkanWaktu() {
+            // Mengambil waktu saat ini
+            let waktuSekarang = new Date();
+            
+            // Menampilkan waktu ke elemen p dengan format lokal Indonesia
+            document.getElementById("tempat-waktu").innerHTML = waktuSekarang.toLocaleString("id-ID");
+        }
+    </script>
+
+</body>
+</html>
