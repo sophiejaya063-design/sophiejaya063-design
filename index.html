@@ -3,342 +3,384 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UTS Semester 1 - Nadira Ayuni Iwanda</title>
-
-    <!-- Bootstrap CDN -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
-
+    <title>Kartu Profil & Kalkulator Saintifik</title>
     <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            color: #333;
         }
 
-        .menu {
-            background-color: white;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        /* Container Kartu Profil */
+        .profile-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
-        .menu a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #0d6efd;
-            font-weight: bold;
-        }
-
-        .kalkulator {
-            max-width: 800px;
-            margin: 40px auto;
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-
-        .header-kalkulator {
+        .avatar {
+            width: 70px;
+            height: 70px;
             background-color: #0d6efd;
             color: white;
-            text-align: center;
-            padding: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
 
-        .header-kalkulator h1 {
-            font-size: 36px;
+        .profile-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #212529;
+            margin-bottom: 4px;
         }
 
-        .identitas {
-            font-size: 20px;
-            background-color: white;
-            color: #4682b4;
-            display: inline-block;
-            padding: 4px 8px;
-        }
-
-        .isi-kalkulator {
-            padding: 35px;
-        }
-
-        .form-label {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .form-control,
-        .form-select {
-            font-size: 18px;
-            padding: 12px;
+        .profile-sub {
+            font-size: 13px;
+            color: #6c757d;
             margin-bottom: 20px;
         }
 
-        .btn-hitung {
-            font-size: 20px;
+        .divider {
             width: 100%;
-            padding: 12px;
+            height: 1px;
+            background-color: #e0e0e0;
+            margin-bottom: 20px;
         }
 
-        .hasil {
+        .info-group {
+            width: 100%;
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: #6c757d;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .badge-active {
+            background-color: #0d6efd;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        /* Container Kalkulator Saintifik */
+        .calc-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .calc-header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .calc-header h2 {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calc-header-badge {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #0d6efd;
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .calc-body {
+            padding: 20px;
+        }
+
+        /* Screen Display */
+        .display-screen {
             background-color: #212529;
             color: white;
-            text-align: center;
-            padding: 30px;
-            margin-top: 35px;
             border-radius: 8px;
+            padding: 15px 20px;
+            text-align: right;
+            margin-bottom: 20px;
         }
 
-        #hasilAngka {
-            font-size: 65px;
+        .expression-display {
+            font-size: 14px;
+            color: #adb5bd;
+            min-height: 20px;
+            word-wrap: break-word;
+        }
+
+        .result-display {
+            font-size: 32px;
             font-weight: bold;
-            overflow-wrap: anywhere;
+            min-height: 40px;
+            word-wrap: break-word;
         }
 
-        @media (max-width: 600px) {
-            .menu a {
-                display: inline-block;
-                margin: 5px;
-            }
+        /* Grid Tombol */
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
 
-            .kalkulator {
-                margin: 25px 10px;
-            }
+        .btn-calc {
+            background-color: #f1f3f5;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 12px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #212529;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
 
-            .header-kalkulator h1 {
-                font-size: 27px;
-            }
+        .btn-calc:hover {
+            background-color: #e9ecef;
+        }
 
-            .identitas {
-                font-size: 15px;
-            }
+        .btn-calc:active {
+            transform: scale(0.96);
+        }
 
-            .isi-kalkulator {
-                padding: 20px;
-            }
+        .btn-func {
+            background-color: #e7f5ff;
+            color: #1971c2;
+            border-color: #a5d8ff;
+        }
+
+        .btn-func:hover {
+            background-color: #d0ebff;
+        }
+
+        .btn-action {
+            background-color: #ffe3e3;
+            color: #e03131;
+            border-color: #ffc9c9;
+        }
+
+        .btn-action:hover {
+            background-color: #ffc9c9;
+        }
+
+        .btn-equal {
+            background-color: #0d6efd;
+            color: white;
+            border-color: #0d6efd;
+            grid-column: span 2;
+        }
+
+        .btn-equal:hover {
+            background-color: #0b5ed7;
+        }
+
+        /* Footer */
+        footer {
+            font-size: 11px;
+            color: #888;
+            margin-top: 10px;
         }
     </style>
 </head>
-
 <body>
 
-    <!-- Menu Navigasi -->
-    <section class="menu">
-        <a href="lat41.html">Latihan P4-1</a>
-        <a href="lat42.html">Latihan P4-2</a>
-        <a href="lat43.html">Latihan P4-3</a>
-        <a href="lat44.html">Latihan P4-4</a>
-    </section>
-
-    <div class="container py-5">
-
-        <!-- Biodata Mahasiswa -->
-        <div class="row justify-content-center">
-            <div class="col-12 col-sm-10 col-md-8 col-lg-6">
-
-                <div class="card shadow border-0 rounded-4">
-                    <div class="card-body text-center p-4">
-
-                        <!-- Foto Profil -->
-                        <div class="mb-3">
-                            <div
-                                class="bg-primary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center"
-                                style="width: 100px; height: 100px; font-size: 40px;"
-                            >
-                                N
-                            </div>
-                        </div>
-
-                        <h2 class="fw-bold mb-1">
-                            Nadira Ayuni Iwanda
-                        </h2>
-
-                        <p class="text-muted mb-4">
-                            Mahasiswa Semester 1
-                        </p>
-
-                        <hr>
-
-                        <div class="text-start mt-4">
-
-                            <div class="mb-3">
-                                <small class="text-muted">Nama Lengkap</small>
-                                <h6>Nadira Ayuni Iwanda</h6>
-                            </div>
-
-                            <div class="mb-3">
-                                <small class="text-muted">NIM</small>
-                                <h6>262302001</h6>
-                            </div>
-
-                            <div class="mb-3">
-                                <small class="text-muted">Program Studi</small>
-                                <h6>Komputerisasi Akuntansi</h6>
-                            </div>
-
-                            <div class="mb-3">
-                                <small class="text-muted">Semester</small>
-                                <h6>1</h6>
-                            </div>
-
-                        </div>
-
-                        <div class="mt-4">
-                            <span class="badge bg-primary px-3 py-2">
-                                Mahasiswa Aktif
-                            </span>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
+    <!-- Kartu Profil -->
+    <div class="profile-card">
+        <div class="avatar">S</div>
+        <div class="profile-name">Sophie Isan Jaya</div>
+        <div class="profile-sub">Mahasiswa Semester 1</div>
+        <div class="divider"></div>
+        
+        <div class="info-group">
+            <div class="info-label">Nama Lengkap</div>
+            <div class="info-value">Sophie Isan Jaya</div>
         </div>
-
-        <!-- Kalkulator Aritmatika UTS -->
-        <div class="kalkulator">
-
-            <div class="header-kalkulator">
-                <h1>Kalkulator Aritmatika</h1>
-                <div class="identitas">
-                    Nadira Ayuni Iwanda - NIM. 262302001
-                </div>
-            </div>
-
-            <div class="isi-kalkulator">
-
-                <!-- Input Angka Pertama -->
-                <label for="angka1" class="form-label">
-                    Angka Pertama
-                </label>
-
-                <input
-                    type="number"
-                    id="angka1"
-                    class="form-control"
-                    placeholder="Masukkan angka pertama"
-                    value="3"
-                    step="any"
-                >
-
-                <!-- Input Angka Kedua -->
-                <label for="angka2" class="form-label">
-                    Angka Kedua
-                </label>
-
-                <input
-                    type="number"
-                    id="angka2"
-                    class="form-control"
-                    placeholder="Masukkan angka kedua"
-                    value="5"
-                    step="any"
-                >
-
-                <!-- Pilihan Operator -->
-                <label for="operator" class="form-label">
-                    Pilih Operator
-                </label>
-
-                <select id="operator" class="form-select">
-                    <option value="+">Penjumlahan (+)</option>
-                    <option value="-">Pengurangan (-)</option>
-                    <option value="*">Perkalian (*)</option>
-                    <option value="/">Pembagian (/)</option>
-                    <option value="**" selected>Pangkat (**)</option>
-                    <option value="%">Modulus (%)</option>
-                </select>
-
-                <!-- Tombol Hitung -->
-                <button
-                    type="button"
-                    class="btn btn-primary btn-hitung"
-                    onclick="hitung()"
-                >
-                    Hitung
-                </button>
-
-                <!-- Hasil Perhitungan -->
-                <div class="hasil">
-                    <h4>HASIL PERHITUNGAN</h4>
-                    <div id="hasilAngka">0</div>
-                </div>
-
-            </div>
+        
+        <div class="info-group">
+            <div class="info-label">NIM</div>
+            <div class="info-value">2623020019</div>
         </div>
-
-        <!-- Footer -->
-        <p class="text-center text-muted mt-4 small">
-            &copy; 2026 Nadira Ayuni Iwanda
-        </p>
-
+        
+        <div class="info-group">
+            <div class="info-label">Program Studi</div>
+            <div class="info-value">Komputerisasi Akuntansi</div>
+        </div>
+        
+        <div class="info-group">
+            <div class="info-label">Semester</div>
+            <div class="info-value">1</div>
+        </div>
+        
+        <div class="badge-active">Mahasiswa Aktif</div>
     </div>
 
-    <!-- JavaScript Kalkulator -->
+    <!-- Kalkulator Saintifik -->
+    <div class="calc-card">
+        <div class="calc-header">
+            <h2>Kalkulator Saintifik</h2>
+            <div class="calc-header-badge">Sophie Isan Jaya - NIM. 2623020019</div>
+        </div>
+        <div class="calc-body">
+            <!-- Layar Hasil -->
+            <div class="display-screen">
+                <div class="expression-display" id="expression"></div>
+                <div class="result-display" id="result">0</div>
+            </div>
+
+            <!-- Tombol-tombol Saintifik -->
+            <div class="keypad">
+                <button class="btn-calc btn-func" onclick="appendFunc('sin(')">sin</button>
+                <button class="btn-calc btn-func" onclick="appendFunc('cos(')">cos</button>
+                <button class="btn-calc btn-func" onclick="appendFunc('tan(')">tan</button>
+                <button class="btn-calc btn-action" onclick="clearAll()">AC</button>
+                <button class="btn-calc btn-action" onclick="deleteChar()">DEL</button>
+
+                <button class="btn-calc btn-func" onclick="appendFunc('log(')">log</button>
+                <button class="btn-calc btn-func" onclick="appendFunc('ln(')">ln</button>
+                <button class="btn-calc btn-func" onclick="appendValue('(')">(</button>
+                <button class="btn-calc btn-func" onclick="appendValue(')')">)</button>
+                <button class="btn-calc btn-func" onclick="appendValue('^')">x^y</button>
+
+                <button class="btn-calc btn-func" onclick="appendFunc('sqrt(')">√</button>
+                <button class="btn-calc" onclick="appendValue('7')">7</button>
+                <button class="btn-calc" onclick="appendValue('8')">8</button>
+                <button class="btn-calc" onclick="appendValue('9')">9</button>
+                <button class="btn-calc btn-func" onclick="appendValue('/')">÷</button>
+
+                <button class="btn-calc btn-func" onclick="appendValue('!')">n!</button>
+                <button class="btn-calc" onclick="appendValue('4')">4</button>
+                <button class="btn-calc" onclick="appendValue('5')">5</button>
+                <button class="btn-calc" onclick="appendValue('6')">6</button>
+                <button class="btn-calc btn-func" onclick="appendValue('*')">×</button>
+
+                <button class="btn-calc btn-func" onclick="appendValue('π')">π</button>
+                <button class="btn-calc" onclick="appendValue('1')">1</button>
+                <button class="btn-calc" onclick="appendValue('2')">2</button>
+                <button class="btn-calc" onclick="appendValue('3')">3</button>
+                <button class="btn-calc btn-func" onclick="appendValue('-')">-</button>
+
+                <button class="btn-calc btn-func" onclick="appendValue('e')">e</button>
+                <button class="btn-calc" onclick="appendValue('0')">0</button>
+                <button class="btn-calc" onclick="appendValue('.')">.</button>
+                <button class="btn-calc btn-func" onclick="appendValue('+')">+</button>
+                <button class="btn-calc btn-func" onclick="appendValue('%')">%</button>
+
+                <button class="btn-calc btn-equal" onclick="calculateResult()">=</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 Sophie Isan Jaya
+    </footer>
+
     <script>
-        function hitung() {
-            let input1 = document.getElementById("angka1").value;
-            let input2 = document.getElementById("angka2").value;
+        const expressionEl = document.getElementById('expression');
+        const resultEl = document.getElementById('result');
+        let currentExpr = '';
 
-            if (input1 === "" || input2 === "") {
-                alert("Silakan masukkan kedua angka!");
-                return;
-            }
+        function appendValue(val) {
+            currentExpr += val;
+            updateDisplay();
+        }
 
-            let angka1 = parseFloat(input1);
-            let angka2 = parseFloat(input2);
-            let operator = document.getElementById("operator").value;
-            let hasil;
+        function appendFunc(funcName) {
+            currentExpr += funcName;
+            updateDisplay();
+        }
 
-            switch (operator) {
-                case "+":
-                    hasil = angka1 + angka2;
-                    break;
+        function clearAll() {
+            currentExpr = '';
+            resultEl.innerText = '0';
+            expressionEl.innerText = '';
+        }
 
-                case "-":
-                    hasil = angka1 - angka2;
-                    break;
+        function deleteChar() {
+            currentExpr = currentExpr.slice(0, -1);
+            updateDisplay();
+        }
 
-                case "*":
-                    hasil = angka1 * angka2;
-                    break;
+        function updateDisplay() {
+            expressionEl.innerText = currentExpr;
+        }
 
-                case "/":
-                    if (angka2 === 0) {
-                        alert("Angka kedua tidak boleh 0 untuk pembagian!");
-                        return;
-                    }
-                    hasil = angka1 / angka2;
-                    break;
+        function factorial(n) {
+            if (n < 0) return NaN;
+            if (n === 0 || n === 1) return 1;
+            let result = 1;
+            for (let i = 2; i <= n; i++) result *= i;
+            return result;
+        }
 
-                case "**":
-                    hasil = angka1 ** angka2;
-                    break;
+        function calculateResult() {
+            if (!currentExpr) return;
+            try {
+                let parsed = currentExpr
+                    .replace(/π/g, 'Math.PI')
+                    .replace(/e/g, 'Math.E')
+                    .replace(/sqrt\(/g, 'Math.sqrt(')
+                    .replace(/sin\(/g, 'Math.sin(')
+                    .replace(/cos\(/g, 'Math.cos(')
+                    .replace(/tan\(/g, 'Math.tan(')
+                    .replace(/log\(/g, 'Math.log10(')
+                    .replace(/ln\(/g, 'Math.log(')
+                    .replace(/\^/g, '**');
 
-                case "%":
-                    if (angka2 === 0) {
-                        alert("Modulus dengan angka kedua 0 tidak bisa dilakukan!");
-                        return;
-                    }
-                    hasil = angka1 % angka2;
-                    break;
-            }
+                parsed = parsed.replace(/(\d+)!/g, (match, number) => factorial(parseInt(number)));
 
-            if (!Number.isFinite(hasil)) {
-                document.getElementById("hasilAngka").textContent =
-                    "Hasil tidak valid";
-            } else {
-                document.getElementById("hasilAngka").textContent =
-                    Number(hasil.toPrecision(12)).toString();
+                let res = eval(parsed);
+                if (typeof res === 'number') {
+                    res = Number.isInteger(res) ? res : parseFloat(res.toFixed(8));
+                }
+                resultEl.innerText = res;
+            } catch (error) {
+                resultEl.innerText = 'Error';
             }
         }
     </script>
-
-    <!-- Bootstrap JS -->
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-    </script>
-
 </body>
-    </html>
+</html>
